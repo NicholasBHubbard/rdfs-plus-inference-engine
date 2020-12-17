@@ -1,3 +1,6 @@
+%   Author: Nicholas Hubbard
+%   Email:  nhub73@keemail.me
+
 :- module(my_prelude,
 	  [ head_of/2,                          % ?List, ?Elem
 	    tail_of/2,                          % ?List, ?Elem
