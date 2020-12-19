@@ -1,0 +1,36 @@
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix hockey: <http://example.org/data/hockey#> .
+@prefix sports: <http://example.org/data/sports#> .
+
+   #####################################
+   ############### MODEL ###############
+   #####################################
+
+hockey:player a rdfs:Property .
+hockey:player rdfs:subClassOf sports:player .
+
+# POSITIONS
+
+hockey:position a rdfs:Class .
+
+hockey:center a hockey:position .
+hockey:leftWing a hockey:position .
+hockey:rightWing a hockey:position .
+hockey:defenseman a hockey:position .
+hockey:goalie a hockey:position .
+
+hockey:playsPosition a rdfs:Property .
+hockey:playsPosition rdfs:domain hockey:player .
+hockey:playsPosition rdfs:range hockey:position .
+
+   ####################################
+   ############### DATA ###############
+   ####################################
+
+hockey:PatriceBergeron a hockey:player .
+hockey:PatriceBergeron hockey:playsPosition hockey:center .
+
