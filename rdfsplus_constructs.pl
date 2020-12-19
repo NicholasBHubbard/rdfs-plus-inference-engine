@@ -35,16 +35,3 @@ is_rdfsplus_construct(rdf(S,P,O)) :-
     ; memberchk(S,AllConstructs)
     ).
 
-%!  rdf_represents_member_of_class(+RDFClass:atom, ?RDF) 
-%
-%   True if RDF is a triple of the form 'rdf(X,rdf:type,RDFSClass)'.
-
-rdf_represents_member_of_class(Class,rdf(_,'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',Class)).
-    
-%!  rdf_existing_members_of_class(+Class, +AllRDF, -RDFList) is det.
-%
-%   True if RDFList is a list containing every triple from World that
-%   state that an X is a member of Class.
-
-rdfClass_allKnown_members(Class,AllRDF,Members) :-
-    include(rdf_represents_member_of_class(Class),AllRDF,Members).

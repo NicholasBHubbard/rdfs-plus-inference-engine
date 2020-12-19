@@ -8,6 +8,11 @@
 
 :- [rdfsplus_constructs].
 
+
+                 /*******************************
+                 *      ENTIRE FILE PARSING     *
+                 *******************************/
+
 %!  ttlFile_separatedTriples(+TurtleFile, -RDFSPlus, -Rest).
 %
 %   True if RDFSPlus is all of the triples from TurtleFile that represent
@@ -27,3 +32,26 @@ ttlFile_allTriples(TtlFile,AllTriples) :-
     rdf_read_turtle(TtlFile,AllTriples,[]). % [] means no special options.
 
 
+                 /*******************************
+                 *   CLASS MEMBERSHIP PARSING   *
+                 *******************************/
+
+rdfClass_allRdf_members(Class,AllRDF,Members)
+    include(rdf_represents_member_of_class(Class),AllRDF,MemberRDF).
+
+%!  rdfClass_allRdf_members(+Class, +AllRDF, -RDFList) 
+%
+%   True if RDFList is a list containing every triple from AllRDF that is
+%   of the form 'rdf(X,rdf:type,Class)'. The difference between this
+%   predicate and rdfClass_allRdf_members/3 is that RDFList is a list of
+%   complete rdf/3 triples, whereas the former predicate is a list of
+%   atoms that represent the X in 'rdf(X,rdf:type,Class)'.
+
+rdfClass_allRdf_membershipRdf(Class,AllRDF,MemberRDF) :-
+    include(rdf_represents_member_of_class(Class),AllRDF,MemberRDF).
+
+%!  rdf_represents_member_of_class(+Class, ?RDF) 
+%
+%   True if RDF is a triple of the form 'rdf(X,rdf:type,Class)'.
+
+rdf_represents_member_of_class(Class,rdf(_,'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',Class)).
