@@ -52,9 +52,10 @@
 	    (*)/1,                              % +Goal
             op(1100,xfy,xor),		        
 	    xor/2,                              % +Goal, +Goal
-	    digit_int/2,                        % ?Char, ?Integer
+            just/2,                             % ?Term, ?Term
 	    number_string_padded/2,             % +RealNumber, -String
-	    number_number_of_digits/2           % +RealNumber, -Integer
+	    number_number_of_digits/2,          % +RealNumber, -Integer
+	    digit_int/2                         % ?Char, ?Integer
 	  ]).
 :- use_module(library(clpfd)).
 :- use_module(library(error)).
@@ -567,16 +568,11 @@ xor(A,B) :- \+A, B, !.
                %          MISCELLANEOUS
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-digit_int('0',0).
-digit_int('1',1).
-digit_int('2',2).
-digit_int('3',3).
-digit_int('4',4).
-digit_int('5',5).
-digit_int('6',6).
-digit_int('7',7).
-digit_int('8',8).
-digit_int('9',9).
+%!  just(?Term, ?Term)
+%
+%   this predicate is useful for pattern matching with lambdas.
+
+just(X,X).
 
 %!  number_string_padded(+Number, -String) is det.
 %
@@ -612,3 +608,16 @@ number_number_of_digits(Int,NumberOfDigits) :-
     exclude((=('.')),S1,S2),
     exclude((=('-')),S2,S3),
     string_length(S3,NumberOfDigits).
+
+% self explanatory
+
+digit_int('0',0).
+digit_int('1',1).
+digit_int('2',2).
+digit_int('3',3).
+digit_int('4',4).
+digit_int('5',5).
+digit_int('6',6).
+digit_int('7',7).
+digit_int('8',8).
+digit_int('9',9).
