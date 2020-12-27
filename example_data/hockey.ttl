@@ -13,6 +13,10 @@
 hockey:player a rdfs:Property .
 hockey:player rdfs:subClassOf sports:player .
 
+# SUB-PROPERTY
+
+hockey:playsPosition rdfs:subPropertyOf sports:hasPosition .
+
 # POSITIONS
 
 hockey:position a rdfs:Class .
@@ -31,6 +35,5 @@ hockey:playsPosition rdfs:range hockey:position .
    ############### DATA ###############
    ####################################
 
-hockey:PatriceBergeron a hockey:player .
 hockey:PatriceBergeron hockey:playsPosition hockey:center .
 
