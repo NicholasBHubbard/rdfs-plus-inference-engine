@@ -16,11 +16,11 @@ messages about all the mistakes you have made, or you will get a new file with a
 inferred triples appended.
 
 * TODO TODO 
-** TODO Modeling Constructs: [1/14]
+** TODO Modeling Constructs: [4/14]
     - [X] rdfs:subClassOf
-    - [ ] rdfs:subPropertyOf
-    - [ ] rdfs:domain
-    - [ ] rdfs:range
+    - [X] rdfs:subPropertyOf
+    - [X] rdfs:domain
+    - [X] rdfs:range
     - [ ] owl:equivalentClass
     - [ ] owl:equivalentProperty
     - [ ] owl:FunctionalProperty

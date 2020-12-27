@@ -44,7 +44,7 @@ infer_rdfs:domain(Property,Domain) :-
 %   triple of the form rdf(Y,rdf:type,Range).
 
 infer_rdfs:range(Property,Range) :-
-    property_subjects(Property,Objects),
+    property_objects(Property,Objects),
     maplist(assert_x_rdf:type(Range),Objects).
 
 
