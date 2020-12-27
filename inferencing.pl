@@ -17,7 +17,7 @@
 
 infer_rdfs:subClassOf(Sub,Super) :-
     rdf:class_members(Sub,SubMembers),
-    maplist({Super}/[X]>>rdf_assert(X,rdf:type,Super),SubMembers).
+    maplist(assert_x_rdf:type(Super),SubMembers).
 
 %!  infer_rdfs:subPropertyOf(+SubProperty, +SuperProperty)
 %
@@ -36,9 +36,23 @@ infer_rdfs:subPropertyOf(Sub,Super) :-
 
 infer_rdfs:domain(Property,Domain) :-
     property_subjects(Property,Subjects),
-    maplist(assert_x_rdf:type_domain(Domain),Subjects).
+    maplist(assert_x_rdf:type(Domain),Subjects).
 
-:- rdf_meta(assert_x_rdf:type_domain(r,t)).
+%!  infer_rdfs:range(+Property, +Range)
+%
+%   For all known rdf/3 triples of the form rdf(X,Property,Y) assert a new rdf/3
+%   triple of the form rdf(Y,rdf:type,Range).
 
-assert_x_rdf:type_domain(Domain,X) :-
-    rdf_assert(X,rdf:type,Domain).                                    
+infer_rdfs:range(Property,Range) :-
+    property_subjects(Property,Objects),
+    maplist(assert_x_rdf:type(Range),Objects).
+
+
+                 /*******************************
+                 *            HELPERS           *
+                 *******************************/
+
+:- rdf_meta(assert_x_rdf:type(r,t)).
+
+assert_x_rdf:type(Type,X) :-
+    rdf_assert(X,rdf:type,Type).                                    

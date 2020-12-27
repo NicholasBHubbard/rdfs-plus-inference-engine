@@ -73,6 +73,14 @@ rdf:property_relatedRdf(Property,RDFList) :-
 property_subjects(Property,Subjects) :-
     findall(X,rdf(X,Property,_),Subjects).
 
+%!  property_objects(+Property, -Objects)
+%
+%   True if Objects is a list of all Y's from all known rdf/3 triples of the  
+%   form rdf(X,Property,Y).
+
+property_objects(Property,Objects) :-
+    findall(Y,rdf(_,Property,Y),Objects).
+
                  /*******************************
                  *          MISC HELPERS        *
                  *******************************/
@@ -83,7 +91,7 @@ property_subjects(Property,Subjects) :-
 
 rdf_assert_list([]).
 rdf_assert_list([rdf(S,P,O)|RDFs]) :-
-    rdf_assert(S,P,O),
+    rdf_assert(S,P,O),DomaioDomain
     rdf_assert_list(RDFs).
 
 %!  is_rdfsplus_construct(+RDF).
