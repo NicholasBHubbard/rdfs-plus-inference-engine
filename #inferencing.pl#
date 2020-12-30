@@ -146,8 +146,7 @@ infer_owl:transitiveProperty(Property) :-
 rdf_assert_transitive_closure_of(Property) :-
     rdf(X,Property,_),
     findall(O,rdf_reachable(X,Property,O),Objects0),
-    tail_of(Objects0,Objects), % first item is Property, but we want the
-                               % irreflexive transitive closure.
+    
     maplist(rdf_assert(X,Property),Objects).
 
 

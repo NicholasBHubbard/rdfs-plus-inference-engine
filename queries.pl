@@ -10,14 +10,11 @@
 :- autoload(library(semweb/turtle),[rdf_read_turtle/3]).
 
 /*
-  This module deals with all of the parsing of .ttl files. Please note that the
-  usage of the words 'RDF' and 'Triple' are used interchangeably. Explain the 
-  rdf_meta/1 predicate.
 */
 
 
                  /*******************************
-                 *        GENERAL PARSING       *
+                 *        GENERAL QUERIES       *
                  *******************************/
 
 %!  parse_and_assert_ttlFile(+File)
@@ -37,19 +34,32 @@ parse_and_assert_ttlFile(File) :-
 all_known_rdf(RDFList) :-
     findall(rdf(S,P,O),rdf(S,P,O),RDFList).
 
+%!  all_rdf_containing(+X, -RDFList)
+%
+%   True if RDFList is a list containing all of the known rdf/3 triples that
+%   contain X in either it's subject, predicate, or object.
+
+all_rdf_containing(X,RDFList) :-
+    all_known_rdf(AllRDF),
+    include(rdf_contains(X),AllRDF,RDFList).
+
+rdf_contains(X,rdf(X,_,_)) :- !.
+rdf_contains(X,rdf(_,X,_)) :- !.
+rdf_contains(X,rdf(_,_,X)) :- !.
+
 
                  /*******************************
                  *        CLASS MEMBERSHIP      *
                  *******************************/
 
-%!  rdfClass_allRdf_members(+Class, -Members)
+%!  class_members(+Class, -Members)
 %
 %   True if Members is a list containing all the X's from rdf triples of the 
 %   form 'rdf(X, rdf:type, Class)'.
 
 :- rdf_meta(rdfsClass_members(r,t)). 
                                      
-rdf:class_members(Class,Members) :-
+class_members(Class,Members) :-
     findall(X,rdf(X,rdf:type,Class),Members).
     
 
@@ -57,12 +67,12 @@ rdf:class_members(Class,Members) :-
                  *           PROPERTIES         *
                  *******************************/
 
-%!  all_related_by_property(+Property,-RDFList)
+%!  property_relatedRdf(+Property,-RDFList)
 %
 %   True if RDFList contains every known rdf/3 triple of the form 
 %   rdf(X,Property,Y).
 
-rdf:property_relatedRdf(Property,RDFList) :-
+property_relatedRdf(Property,RDFList) :-
     findall(rdf(X,Property,Y),rdf(X,Property,Y),RDFList).
 
 %!  property_subjects(+Property, -Subjects)
@@ -81,6 +91,7 @@ property_subjects(Property,Subjects) :-
 property_objects(Property,Objects) :-
     findall(Y,rdf(_,Property,Y),Objects).
 
+
                  /*******************************
                  *          MISC HELPERS        *
                  *******************************/
@@ -91,7 +102,7 @@ property_objects(Property,Objects) :-
 
 rdf_assert_list([]).
 rdf_assert_list([rdf(S,P,O)|RDFs]) :-
-    rdf_assert(S,P,O),DomaioDomain
+    rdf_assert(S,P,O),
     rdf_assert_list(RDFs).
 
 %!  is_rdfsplus_construct(+RDF).

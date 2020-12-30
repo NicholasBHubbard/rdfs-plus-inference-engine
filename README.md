@@ -1,7 +1,8 @@
 -*- mode:org;mode:auto-fill;fill-column:75 -*-
 * Overview
 Static inference engine powered by SWI-Prolog for the RDFS-Plus modelling language
-defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. 
+defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. I may extend this to a more
+complete owl inference engine in the future.
 
 * Features
   + Static inference engine 
@@ -16,20 +17,18 @@ messages about all the mistakes you have made, or you will get a new file with a
 inferred triples appended.
 
 * TODO TODO 
-** TODO Modeling Constructs: [4/14]
+** TODO Modeling Constructs: [12/12]
     - [X] rdfs:subClassOf
     - [X] rdfs:subPropertyOf
     - [X] rdfs:domain
     - [X] rdfs:range
-    - [ ] owl:equivalentClass
-    - [ ] owl:equivalentProperty
-    - [ ] owl:FunctionalProperty
-    - [ ] owl:InverseFunctionalProperty
-    - [ ] owl:sameAs
-    - [ ] owl:inverseOf
-    - [ ] owl:SymmetricProperty
-    - [ ] owl:TransitiveProperty
-    - [ ] owl:DatatypeProperty
-    - [ ] owl:ObjectProperty
-      
+    - [X] owl:equivalentClass
+    - [X] owl:equivalentProperty
+    - [X] owl:FunctionalProperty
+    - [X] owl:InverseFunctionalProperty
+    - [X] owl:sameAs
+    - [X] owl:inverseOf
+    - [X] owl:SymmetricProperty
+    - [X] owl:TransitiveProperty
+
              
