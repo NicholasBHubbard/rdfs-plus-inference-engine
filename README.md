@@ -1,4 +1,4 @@
--*- mode:org;mode:auto-fill;fill-column:75 -*-
+# -*- mode:org;mode:auto-fill;fill-column:80 -*-
 #+title: RDFS-Plus inference engine
 #+author: Nicholas Hubbard
 
