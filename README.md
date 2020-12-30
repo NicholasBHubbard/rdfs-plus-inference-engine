@@ -1,12 +1,14 @@
 -*- mode:org;mode:auto-fill;fill-column:75 -*-
+#+title: RDFS-Plus inference engine
+#+author: Nicholas Hubbard
+
 * Overview
 Static inference engine powered by SWI-Prolog for the RDFS-Plus modelling language
-defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. I may extend this to a more
-complete owl inference engine in the future.
+defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. 
 
 * Features
   + Static inference engine 
-  + Parse [[https://en.wikipedia.org/wiki/Turtle_(syntax)][turtle]] files into pure rdf
+  + Parse [[https://en.wikipedia.org/wiki/Turtle_(syntax)][turtel files]] into pure rdf
   + Performs contradiction analysis
   + /tbd/
 
