@@ -1,4 +1,4 @@
-# -*- mode:org;mode:auto-fill;fill-column:80 -*-
+#-*- mode:org;mode:auto-fill;fill-column:80 -*-
 #+title: RDFS-Plus inference engine
 #+author: Nicholas Hubbard
 
@@ -8,7 +8,7 @@ defined in [[https://workingontologist.org/index.html][Semantic Web for the Work
 
 * Features
   + Static inference engine 
-  + Parse [[https://en.wikipedia.org/wiki/Turtle_(syntax)][turtel files]] into pure rdf
+  + Parse [[https://en.wikipedia.org/wiki/Turtle_(syntax)][turtle files]] into pure rdf
   + Performs contradiction analysis
   + /tbd/
 
