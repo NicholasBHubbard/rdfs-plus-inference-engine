@@ -2,11 +2,70 @@
 %   Email:  nhub73@keemail.me
 %   WWW:    https://github.com/NicholasBHubbard/rdf_inference_engine
 
+:- module(rdfsplus_inference,
+          [ infer/1,                                % +RDF
+            infer_rdfs:subClassOf/2,                % +Sub, +Super
+            infer_rdfs:subPropertyOf/2,             % +Sub, +Super
+            infer_rdfs:domain/2,                    % +Property, +Domain
+            infer_rdfs:range/2,                     % +Property, +Range
+            infer_owl:equivalentClass/2,            % +Class, +Class   
+            infer_owl:equivalentProperty/2,         % +Property, +Property
+            infer_owl:sameAs/2,                     % +X, +Y
+            infer_owl:functionalProperty/1,         % +Property
+            infer_owl:inverseFunctionalProperty/1,  % +Property
+            infer_owl:inverseOf/2,                  % +Property, +Property
+            infer_owl:symmetricProperty/1,          % +Property
+            infer_owl:transitiveProperty/1          % +Property
+          ]).
+
 :- autoload(library(semweb/rdf11),[rdf/3,rdf_assert/3,rdf_reachable/3]).
 :- autoload(library(yall),[(>>)/2]).
-:- use_module(my_prelude,[tail_of/2]).
 
-:- [queries].
+:- use_module(my_prelude,[tail_of/2]).
+:- use_module(queries).
+
+
+                 /*******************************
+                 *              META            *
+                 *******************************/
+
+:- rdf_meta(infer(t)).
+
+infer(rdf(Sub,rdfs:subClassOf,Super)) :-
+    infer_rdfs:subClassOf(Sub,Super), !.
+
+infer(rdf(Sub,rdfs:subPropertyOf,Super)) :-
+    infer_rdfs:subPropertyOf(Sub,Super), !.
+
+infer(rdf(Property,rdfs:domain,Class)) :-
+    infer_rdfs:domain(Property,Class), !.
+
+infer(rdf(Property,rdfs:range,Class)) :-
+    infer_rdfs:range(Property,Class), !.
+
+infer(rdf(Class1,owl:equivalentClass,Class2)) :-
+    infer_owl:equivalentClass(Class1,Class2), !.
+
+infer(rdf(Property1,owl:equivalentProperty,Property2)) :-
+    infer_owl:equivalentProperty(Property1,Property2), !.
+
+infer(rdf(X,owl:sameAs,Y)) :-
+    infer_owl:sameAs(X,Y), !.
+
+infer(rdf(Property1,owl:inverseOf,Property2)) :-
+    infer_owl:inverseOf(Property1,Property2), !.
+
+infer(rdf(Property,rdf:type,owl:'FunctionalProperty')) :-
+    infer_owl:functionalProperty(Property), !.
+        
+infer(rdf(Property,rdf:type,owl:'InverseFunctionalProperty')) :-
+    infer_owl:inverseFunctionalProperty(Property), !.
+
+infer(rdf(Property,rdf:type,owl:'SymmetricProperty')) :-
+    infer_owl:symmetricProperty(Property), !
+
+infer(rdf(Property,rdf:type,owl:'TransitiveProperty')) :-
+    infer_owl:transitiveProperty(Property).
 
 
                  /*******************************
@@ -36,18 +95,18 @@ infer_rdfs:subPropertyOf(Sub,Super) :-
 %   For all known rdf/3 triples of the form rdf(X,Property,Y) assert a new rdf/3
 %   triple of the form rdf(X,rdf:type,Domain).
 
-infer_rdfs:domain(Property,Domain) :-
+infer_rdfs:domain(Property,Class) :-
     property_subjects(Property,Subjects),
-    maplist(assert_x_rdf:type(Domain),Subjects).
+    maplist(assert_x_rdf:type(Class),Subjects).
 
 %!  infer_rdfs:range(+Property, +Range)
 %
 %   For all known rdf/3 triples of the form rdf(X,Property,Y) assert a new rdf/3
 %   triple of the form rdf(Y,rdf:type,Range).
 
-infer_rdfs:range(Property,Range) :-
+infer_rdfs:range(Property,Class) :-
     property_objects(Property,Objects),
-    maplist(assert_x_rdf:type(Range),Objects).
+    maplist(assert_x_rdf:type(Class),Objects).
 
 %!  infer_owl:equivalentClass(+Class1, +Class2)
 %
@@ -86,7 +145,15 @@ assert_with_y_insteadof_x(X,Y,rdf(X,P,O)) :-
 assert_with_y_insteadof_x(X,Y,rdf(S,X,O)) :-
     rdf_assert(S,Y,O), !.
 assert_with_y_insteadof_x(X,Y,rdf(S,P,X)) :-
-    rdf_assert(S,P,Y).
+    rdf_assert(S,P,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,P,X)) :-
+    rdf_assert(Y,P,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,X,O)) :-
+    rdf_assert(Y,Y,O), !.
+assert_with_y_insteadof_x(X,Y,rdf(S,X,X)) :-
+    rdf_assert(S,Y,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,X,X)) :-
+    rdf_assert(Y,Y,Y).
 
 %!  infer_owl:functionalProperty(+Property)
 %
@@ -146,8 +213,9 @@ infer_owl:transitiveProperty(Property) :-
 rdf_assert_transitive_closure_of(Property) :-
     rdf(X,Property,_),
     findall(O,rdf_reachable(X,Property,O),Objects0),
-    tail_of(Objects0,Objects), % first item is X, but we want the irreflexive 
-                               % transitive closure.
+    tail_of(Objects0,Objects), % First item is X, but we want the irreflexive 
+                               % transitive closure. Without this step we get
+                               % the REFLEXIVE transitive closure. 
     maplist(rdf_assert(X,Property),Objects).
 
 
@@ -163,9 +231,3 @@ rdf_assert_transitive_closure_of(Property) :-
 
 assert_x_rdf:type(Class,X) :-
     rdf_assert(X,rdf:type,Class).                                    
-
-
-
-
-
-

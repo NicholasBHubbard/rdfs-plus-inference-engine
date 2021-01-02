@@ -2,31 +2,27 @@
 %   Email:  nhub73@keemail.me
 %   WWW:    https://github.com/NicholasBHubbard/rdf_inference_engine
 
-:- autoload(library(semweb/rdf_prefixes),
-            [rdf_register_prefix/2,
-             rdf_meta/1
-            ]).
-:- autoload(library(semweb/rdf11),[rdf/3,rdf_assert/3]).
-:- autoload(library(semweb/turtle),[rdf_read_turtle/3]).
+:- module(queries,
+          [ all_known_rdf/1,                  % -RDFList
+            all_rdf_containing/2,             % +X, -RDFList
+            number_of_known_rdf_triples/1,    % -Int
+            all_known_rdfsplus_triples/1,     % -RDFList
+            class_members/2,                  % +rdfClass, -Members
+            property_relatedRdf/2,            % +rdfProperty, -RDFList
+            property_subjects/2,              % +rdfProperty, -Subjects
+            property_objects/2                % +rdfProperty, -Objects
+          ]).
 
-/*
-*/
+:- autoload(library(semweb/rdf_prefixes),[rdf_meta/1]).
+:- autoload(library(semweb/rdf11),[rdf/3]).
+
+:- use_module(my_prelude,[list_length/2]).
 
 
                  /*******************************
                  *        GENERAL QUERIES       *
                  *******************************/
 
-%!  parse_and_assert_ttlFile(+File)
-%
-%   Parse File using library(semweb/turtle)'s rdf_read_turtle/3 which gives a 
-%   list of rdf/3 triples. Then use my_rdf_assert_list to assert all of the 
-%   parsed triples.
-
-parse_and_assert_ttlFile(File) :-
-    rdf_read_turtle(File,AllTriples,[]), % [] means no special options.
-    rdf_assert_list(AllTriples).
-    
 %!  all_known_rdf(-RDFList)
 %
 %   True if RDFList is every rdf/3 triple that has been asserted.
@@ -43,9 +39,28 @@ all_rdf_containing(X,RDFList) :-
     all_known_rdf(AllRDF),
     include(rdf_contains(X),AllRDF,RDFList).
 
-rdf_contains(X,rdf(X,_,_)) :- !.
-rdf_contains(X,rdf(_,X,_)) :- !.
-rdf_contains(X,rdf(_,_,X)) :- !.
+rdf_contains(X,rdf(S,P,O)) :-
+    ( X = S
+    ; X = P
+    ; X = O
+    ).
+
+%!  number_of_known_rdf_triples(-Int).
+%
+%   True if int is the number of asserted rdf/3 triples.
+
+number_of_known_rdf_triples(Int) :-
+    all_known_rdf(AllRDF),
+    list_length(AllRDF,Int).
+
+%!  all_known_rdfsplus_triples(-RDFList)
+%
+%   True if RDFList is a list containing all the rdf/3 triples that represent
+%   RDFS-Plus constructs.
+
+all_known_rdfsplus_triples(RDFList) :-
+    all_known_rdf(AllRDF),
+    include(is_rdfsplus,AllRDF,RDFList).
 
 
                  /*******************************
@@ -96,41 +111,21 @@ property_objects(Property,Objects) :-
                  *          MISC HELPERS        *
                  *******************************/
 
-%!  rdf_assert_list(+RDFList)
+%!  is_rdfsplus(+RDF)
 %
-%   Assert every rdf/3 triple in RDFList. 
+%   True if RDF is an rdf/3 triple representing an RDFS-Plus construct.
 
-rdf_assert_list([]).
-rdf_assert_list([rdf(S,P,O)|RDFs]) :-
-    rdf_assert(S,P,O),
-    rdf_assert_list(RDFs).
+:- rdf_meta(is_rdfsplus(t)).
 
-%!  is_rdfsplus_construct(+RDF).
-%
-%   True if either the subject, predicate, or object of RDF is an RDFS-Plus 
-%   construct.
-
-is_rdfsplus_construct(rdf(S,P,O)) :-
-    all_rdfsplus_constructs(Constructs),
-    ( memberchk(P,Constructs)
-    ; memberchk(O,Constructs)
-    ; memberchk(S,Constructs)
-    ).
-
-%!  all_rdfsplus_constructs(-List) is det.
-%
-%   True if List is all of the defined constructs of RDFS-Plus.
-
-all_rdfsplus_constructs(List) :-
-    List = ['http://www.w3.org/2000/01/rdf-schema#subClassOf',
-            'http://www.w3.org/2000/01/rdf-schema#subPropertyOf',
-            'http://www.w3.org/2000/01/rdf-schema#domain',
-            'http://www.w3.org/2000/01/rdf-schema#range',
-            'http://www.w3.org/2002/07/owl#equivalentClass',
-            'http://www.w3.org/2002/07/owl#equivalentProperty',
-            'http://www.w3.org/2002/07/owl#FunctionalProperty',
-            'http://www.w3.org/2002/07/owl#InverseFunctionalProperty',
-            'http://www.w3.org/2002/07/owl#sameAs',
-            'http://www.w3.org/2002/07/owl#inverseOf',
-            'http://www.w3.org/2002/07/owl#SymmetricProperty',
-            'http://www.w3.org/2002/07/owl#TransitiveProperty'].
+is_rdfsplus(rdf(_,rdfs:subClassOf,_)) :- !.
+is_rdfsplus(rdf(_,rdfs:subPropertyOf,_)) :- !.
+is_rdfsplus(rdf(_,rdfs:domain,_)) :- !.
+is_rdfsplus(rdf(_,rdfs:range,_)) :- !.
+is_rdfsplus(rdf(_,owl:equivalentProperty,_)) :- !.
+is_rdfsplus(rdf(_,owl:equivalentClass,_)) :- !.
+is_rdfsplus(rdf(_,owl:sameAs,_)) :- !.
+is_rdfsplus(rdf(_,owl:inverseOf,_)) :- !.
+is_rdfsplus(rdf(_,rdf:type,owl:'SymmetricProperty',_)) :- !.
+is_rdfsplus(rdf(_,rdf:type,owl:'FunctionalProperty')) :- !.
+is_rdfsplus(rdf(_,rdf:type,owl:'InverseFunctionalProperty')) :- !.
+is_rdfsplus(rdf(_,rdf:type,owl:'TransitiveProperty')).

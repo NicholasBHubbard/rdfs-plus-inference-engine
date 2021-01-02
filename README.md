@@ -19,18 +19,17 @@ messages about all the mistakes you have made, or you will get a new file with a
 inferred triples appended.
 
 * TODO TODO 
-** TODO Modeling Constructs: [12/12]
-    - [X] rdfs:subClassOf
-    - [X] rdfs:subPropertyOf
-    - [X] rdfs:domain
-    - [X] rdfs:range
-    - [X] owl:equivalentClass
-    - [X] owl:equivalentProperty
-    - [X] owl:FunctionalProperty
-    - [X] owl:InverseFunctionalProperty
-    - [X] owl:sameAs
-    - [X] owl:inverseOf
-    - [X] owl:SymmetricProperty
-    - [X] owl:TransitiveProperty
-
-             
+* TODO Implement Modeling Constructs: [12/12] 
+   - [X] rdfs:subClassOf
+   - [X] rdfs:subPropertyOf
+   - [X] rdfs:domain
+   - [X] rdfs:range
+   - [X] owl:equivalentClass
+   - [X] owl:equivalentProperty
+   - [X] owl:FunctionalProperty
+   - [X] owl:InverseFunctionalProperty
+   - [X] owl:sameAs
+   - [X] owl:inverseOf
+   - [X] owl:SymmetricProperty
+   - [X] owl:TransitiveProperty
+** TODO Implement Contradiction Analysis
