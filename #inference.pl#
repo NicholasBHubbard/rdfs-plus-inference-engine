@@ -49,7 +49,7 @@ infer(rdf(Class1,owl:equivalentClass,Class2)) :-
 infer(rdf(Property1,owl:equivalentProperty,Property2)) :-
     infer_owl:equivalentProperty(Property1,Property2), !.
 
-infer(rdf(X,owl:sameAs,Y)) :-
+nfer(rdf(X,owl:sameAs,Y)) :-
     infer_owl:sameAs(X,Y), !.
 
 infer(rdf(Property1,owl:inverseOf,Property2)) :-
@@ -62,7 +62,7 @@ infer(rdf(Property,rdf:type,owl:'InverseFunctionalProperty')) :-
     infer_owl:inverseFunctionalProperty(Property), !.
 
 infer(rdf(Property,rdf:type,owl:'SymmetricProperty')) :-
-    infer_owl:symmetricProperty(Property), !.
+    infer_owl:symmetricProperty(Property), !
 
 infer(rdf(Property,rdf:type,owl:'TransitiveProperty')) :-
     infer_owl:transitiveProperty(Property).
@@ -140,20 +140,20 @@ infer_owl:sameAs(X,Y) :-
     all_rdf_containing(Y,YRdf),
     maplist(assert_with_y_insteadof_x(Y,X),YRdf).
 
-assert_with_y_insteadof_x(X,Y,rdf(X,X,X)) :-
-    rdf_assert(Y,Y,Y), !.
-assert_with_y_insteadof_x(X,Y,rdf(X,X,O)) :-
-    rdf_assert(Y,Y,O), !.
-assert_with_y_insteadof_x(X,Y,rdf(S,X,X)) :-
-    rdf_assert(S,Y,Y), !.
-assert_with_y_insteadof_x(X,Y,rdf(X,P,X)) :-
-    rdf_assert(Y,P,Y), !.
 assert_with_y_insteadof_x(X,Y,rdf(X,P,O)) :-
     rdf_assert(Y,P,O), !.
 assert_with_y_insteadof_x(X,Y,rdf(S,X,O)) :-
     rdf_assert(S,Y,O), !.
 assert_with_y_insteadof_x(X,Y,rdf(S,P,X)) :-
-    rdf_assert(S,P,Y).
+    rdf_assert(S,P,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,P,X)) :-
+    rdf_assert(Y,P,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,X,O)) :-
+    rdf_assert(Y,Y,O), !.
+assert_with_y_insteadof_x(X,Y,rdf(S,X,X)) :-
+    rdf_assert(S,Y,Y), !.
+assert_with_y_insteadof_x(X,Y,rdf(X,X,X)) :-
+    rdf_assert(Y,Y,Y).
 
 %!  infer_owl:functionalProperty(+Property)
 %
