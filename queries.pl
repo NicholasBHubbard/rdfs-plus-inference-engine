@@ -93,7 +93,7 @@ property_relatedRdf(Property,RDFList) :-
 %!  property_subjects(+Property, -Subjects)
 %
 %   True if Subjects is a list of all X's from all known rdf/3 triples of the  
-%   form rdf(X,Property,Y).
+%   form rdf(X,Property,_).
 
 property_subjects(Property,Subjects) :-
     findall(X,rdf(X,Property,_),Subjects).
@@ -101,7 +101,7 @@ property_subjects(Property,Subjects) :-
 %!  property_objects(+Property, -Objects)
 %
 %   True if Objects is a list of all Y's from all known rdf/3 triples of the  
-%   form rdf(X,Property,Y).
+%   form rdf(_,Property,Y).
 
 property_objects(Property,Objects) :-
     findall(Y,rdf(_,Property,Y),Objects).

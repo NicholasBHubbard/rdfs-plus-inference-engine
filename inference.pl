@@ -2,27 +2,15 @@
 %   Email:  nhub73@keemail.me
 %   WWW:    https://github.com/NicholasBHubbard/rdf_inference_engine
 
-:- module(rdfsplus_inference,
-          [ infer/1,                                % +RDF
-            infer_rdfs:subClassOf/2,                % +Sub, +Super
-            infer_rdfs:subPropertyOf/2,             % +Sub, +Super
-            infer_rdfs:domain/2,                    % +Property, +Domain
-            infer_rdfs:range/2,                     % +Property, +Range
-            infer_owl:equivalentClass/2,            % +Class, +Class   
-            infer_owl:equivalentProperty/2,         % +Property, +Property
-            infer_owl:sameAs/2,                     % +X, +Y
-            infer_owl:functionalProperty/1,         % +Property
-            infer_owl:inverseFunctionalProperty/1,  % +Property
-            infer_owl:inverseOf/2,                  % +Property, +Property
-            infer_owl:symmetricProperty/1,          % +Property
-            infer_owl:transitiveProperty/1          % +Property
+:- module(inference,
+          [ infer/1             % +RDF
           ]).
 
 :- autoload(library(semweb/rdf11),[rdf/3,rdf_assert/3,rdf_reachable/3]).
 :- autoload(library(yall),[(>>)/2]).
 
-:- use_module(my_prelude,[tail_of/2]).
 :- use_module(queries).
+:- use_module(my_prelude,[tail_of/2]).
 
 
                  /*******************************
@@ -188,9 +176,9 @@ lambda_inverse_functional(Y,Property,X) :-
 %   For all rdf/3 triples of the form rdf(X,Property1,Y) assert a new triple 
 %   rdf(Y,Property2,X).
 
-infer_owl:inverseOf(P,Q) :-
-    property_relatedRdf(P,RelatedByP),
-    maplist(apply_inverseOf_rules(Q),RelatedByP).
+infer_owl:inverseOf(P1,P2) :-
+    property_relatedRdf(P1,RelatedByP1),
+    maplist(apply_inverseOf_rules(P2),RelatedByP).
     
 apply_inverseOf_rules(Property,rdf(S,_,O)) :-
     rdf_assert(O,Property,S).

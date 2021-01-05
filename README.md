@@ -32,4 +32,3 @@ inferred triples appended.
    - [X] owl:inverseOf
    - [X] owl:SymmetricProperty
    - [X] owl:TransitiveProperty
-** TODO Implement Contradiction Analysis
