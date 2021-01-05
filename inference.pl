@@ -3,7 +3,7 @@
 %   WWW:    https://github.com/NicholasBHubbard/rdf_inference_engine
 
 :- module(inference,
-          [ infer/1             % +RDF
+          [ make_all_inferences/0
           ]).
 
 :- autoload(library(semweb/rdf11),[rdf/3,rdf_assert/3,rdf_reachable/3]).
@@ -14,8 +14,16 @@
 
 
                  /*******************************
-                 *              META            *
+                 *     CULMINATING PREDICATES   *
                  *******************************/
+
+make_all_inferences :-
+    true.
+
+%   infer(+RDF)
+%
+%   Used as the culmination of all the individual constructs. Must be passed an
+%   rdf/3 triple that represents an RDFS-Plus construct.
 
 :- rdf_meta(infer(t)).
 
@@ -178,7 +186,7 @@ lambda_inverse_functional(Y,Property,X) :-
 
 infer_owl:inverseOf(P1,P2) :-
     property_relatedRdf(P1,RelatedByP1),
-    maplist(apply_inverseOf_rules(P2),RelatedByP).
+    maplist(apply_inverseOf_rules(P2),RelatedByP1).
     
 apply_inverseOf_rules(Property,rdf(S,_,O)) :-
     rdf_assert(O,Property,S).

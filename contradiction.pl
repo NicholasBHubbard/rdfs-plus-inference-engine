@@ -15,7 +15,7 @@
 
 
                  /*******************************
-                 *              META            *
+                 *     CULMINATING PREDICATES   *
                  *******************************/
 
 check_for_contradictions :-
