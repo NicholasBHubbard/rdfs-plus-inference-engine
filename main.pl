@@ -8,6 +8,6 @@
 
 main(File) :-
     parse_and_assert_ttlFile(File),
-%    make_all_inferences,
+%    make_all_inferences, LAST THING THAT NEEDS TO BE DONE
     check_for_contradictions,
-    write_new_ttl_file.
+    write_new_ttlFile.
