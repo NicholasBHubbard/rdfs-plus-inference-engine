@@ -7,10 +7,10 @@
  defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. 
 
 * State of the Project
-  All predicates for creating new rdf/3 triples and and analyzing for
+  All predicates for creating new rdf/3 triples and analyzing for
   contradictions based off RDFS-Plus have been implemented. The final step for
   completion of the project is to figure out an algorithm to compute all
-  possible inferences. 
+  possible inferences.
 
 * Features
   + Static inference engine 
