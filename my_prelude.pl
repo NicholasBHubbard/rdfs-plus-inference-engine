@@ -171,7 +171,6 @@ list_length_minus_1(List,LengthMinus1) :-
 %   Ex: list_partioned_on(100,[1,2,100,3,4,100,5,6],[[1,2],[3,4],[5,6]].
 
 list_partitioned_on(Delimiter,List,Solution) :-
-    must_be(constant,Delimiter),
     must_be(list,List),
     list_partitioned_on_star(Delimiter,List,[],Solution,[]).
 
