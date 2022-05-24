@@ -356,8 +356,9 @@ lists_intersection_star([X|Xs],Ys,Acc) :-
 %
 %   True if Perms is a list containing every permutation of List.
 
-list_permutations(List, Perms) :-
-    findall(Perm, permutation(List, Perm), Perms).
+list_permutations([],[]).
+list_permutations(List,Perms) :-
+    findall(Perm,permutation(List,Perm),Perms).
 
 %!  list_without_first_n_elems(?List1, ?Int, ?List2).
 %
