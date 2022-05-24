@@ -1,5 +1,5 @@
 %   Author: Nicholas Hubbard
-%   Email:  nhub73@keemail.me
+%   Email:  nicholashubbard@posteo.net
 %   WWW:    https://github.com/NicholasBHubbard/rdf_inference_engine
 
 :- module(ttl_read_write,
