@@ -5,7 +5,7 @@
 :- module(queries,
           [ all_known_rdf/1,                  % -RDFList
             all_rdf_containing/2,             % +X, -RDFList
-            number_of_known_rdf_triples/1,    % -Int
+            number_of_known_rdf/1,            % -Int
             all_known_rdfsplus/1,             % -RDFList
             class_members/2,                  % +rdfClass, -Members
             property_relatedRdf/2,            % +rdfProperty, -RDFList
@@ -45,11 +45,11 @@ rdf_contains(X,rdf(S,P,O)) :-
     ; X = O
     ).
 
-%!  number_of_known_rdf_triples(-Int).
+%!  number_of_known_rdf(-Int).
 %
 %   True if int is the number of asserted rdf/3 triples.
 
-number_of_known_rdf_triples(Int) :-
+number_of_known_rdf(Int) :-
     all_known_rdf(AllRDF),
     list_length(AllRDF,Int).
 
