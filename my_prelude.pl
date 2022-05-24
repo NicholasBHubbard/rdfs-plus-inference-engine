@@ -26,6 +26,7 @@
 	    lists_chopped_to_equal_length/4,    % ?List, ?List, ?List, ?List
 	    lists_zipped/3,                     % ?List, ?List, ?ListOfPairs
 	    lists_intersection/3,               % +List, +List, -List
+            list_permutations/2,                % +List, -Perms
 	    list_without_first_n_elems/3,       % ?List, ?Int, ?List
 	    lists_disjoint/2,                   % +List, +List
 	    list_list_difference/3,             % +List, +List, -List
@@ -350,6 +351,13 @@ lists_intersection_star([X|Xs],Ys,[X|Acc]) :-
 lists_intersection_star([X|Xs],Ys,Acc) :-
     \+ memberchk(X,Ys),
     lists_intersection_star(Xs,Ys,Acc).
+
+%!  list_permutations(+List, -Perms)
+%
+%   True if Perms is a list containing every permutation of List.
+
+list_permutations(List, Perms) :-
+    findall(Perm, permutation(List, Perm), Perms).
 
 %!  list_without_first_n_elems(?List1, ?Int, ?List2).
 %
