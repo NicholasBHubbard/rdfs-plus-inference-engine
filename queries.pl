@@ -47,7 +47,7 @@ rdf_contains(X,rdf(S,P,O)) :-
 
 %!  number_of_known_rdf(-Int).
 %
-%   True if int is the number of asserted rdf/3 triples.
+%   True if Int is the number of asserted rdf/3 triples.
 
 number_of_known_rdf(Int) :-
     all_known_rdf(AllRDF),
