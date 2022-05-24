@@ -6,7 +6,7 @@
           [ all_known_rdf/1,                  % -RDFList
             all_rdf_containing/2,             % +X, -RDFList
             number_of_known_rdf_triples/1,    % -Int
-            all_known_rdfsplus_triples/1,     % -RDFList
+            all_known_rdfsplus/1,             % -RDFList
             class_members/2,                  % +rdfClass, -Members
             property_relatedRdf/2,            % +rdfProperty, -RDFList
             property_subjects/2,              % +rdfProperty, -Subjects
@@ -53,12 +53,12 @@ number_of_known_rdf_triples(Int) :-
     all_known_rdf(AllRDF),
     list_length(AllRDF,Int).
 
-%!  all_known_rdfsplus_triples(-RDFList)
+%!  all_known_rdfsplus(-RDFList)
 %
 %   True if RDFList is a list containing all the rdf/3 triples that represent
 %   RDFS-Plus constructs.
 
-all_known_rdfsplus_triples(RDFList) :-
+all_known_rdfsplus(RDFList) :-
     all_known_rdf(AllRDF),
     include(is_rdfsplus,AllRDF,RDFList).
 

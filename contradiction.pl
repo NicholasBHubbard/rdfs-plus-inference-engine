@@ -19,7 +19,7 @@
                  *******************************/
 
 check_for_contradictions :-
-    all_known_rdfsplus_triples(RDFSPlus),
+    all_known_rdfsplus(RDFSPlus),
     maplist(check,RDFSPlus).
 
 %   check(+RDF)
