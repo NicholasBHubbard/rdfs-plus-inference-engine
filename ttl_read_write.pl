@@ -22,9 +22,9 @@ parse_and_assert_ttlFile(File) :-
     rdf_read_turtle(File,AllTriples,[]), % [] means no special options.
     maplist([rdf(S,P,O)]>>rdf_assert(S,P,O),AllTriples).
 
-%!  write_new_ttlFile
+%!  write_new_ttlFile(+OutFile)
 %
-%   Write all known rdf/3 triples to a new file called 'INFERRED'.
+%   Write all known rdf/3 triples to a file named OutFile.
 
-write_new_ttlFile :-
-    rdf_save_turtle('INFERRED.ttl',[]).
+write_new_ttlFile(File) :-
+    rdf_save_turtle(OutFile,[]).
