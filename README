@@ -3,13 +3,16 @@
 #+author: Nicholas Hubbard
 
 * Overview
- Static inference engine powered by SWI-Prolog for the RDFS-Plus modeling language
- defined in [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]]. 
+ Static inference engine the RDFS-Plus modeling language defined in [[https://workingontologist.org/index.html][Semantic
+ Web for the Working Ontologist]]. 
 
 * Disclaimer
   If you actually need an RDFS-Plus inference engine their are better options
   out there. This is just a toy project that I created for fun to help me learn
-  SWI-Prolog.
+  Prolog.
+
+  This code is written specifically for SWI-Prolog and makes no promises to run
+  on any other Prolog implementation.
 
 * Features
   + Static inference engine 
@@ -21,3 +24,6 @@
 rdfs-plus-inference-engine/main File.ttl
 #+END_SRC
 which outputs a file named =File.ttl.inferred=.
+
+You may get an error about not having the =reif= library installed, in which
+case you must start up swipl and run =pack_install(reif)=.
