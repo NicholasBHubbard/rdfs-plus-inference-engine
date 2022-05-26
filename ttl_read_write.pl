@@ -4,7 +4,7 @@
 
 :- module(ttl_read_write,
           [ parse_and_assert_ttlFile/1,   % +File
-            write_new_ttlFile/0
+            write_new_ttlFile/1
           ]).
                          
 :- autoload(library(semweb/turtle),[rdf_read_turtle/3]).
