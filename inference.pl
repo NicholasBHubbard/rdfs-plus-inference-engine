@@ -10,7 +10,8 @@
 :- autoload(library(yall),[(>>)/2]).
 
 :- use_module(queries).
-:- use_module(my_prelude,[tail_of/2]).
+:- use_module(my_prelude,[tail_of/2, list_length/2, list_permutations/2]).
+:- use_module(library(clpfd)).
 
 
                  /*******************************
@@ -18,7 +19,15 @@
                  *******************************/
 
 make_all_inferences :-
-    true.
+    number_of_known_rdf(NumRDFBeforeInfering),
+    all_known_rdfsplus(RDFSPlus),
+    list_permutations(RDFSPlus, RDFSPlusPerms),
+    maplist(infer, RDFSPlusPerms),
+    number_of_known_rdf(NumRDFAfterInfering),
+    (  NumRDFBeforeInfering #= NumRDFAfterInfering
+    -> true
+    ;  make_all_inferences
+    ).
 
 %   infer(+RDF)
 %
