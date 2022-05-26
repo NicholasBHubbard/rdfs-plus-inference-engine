@@ -3,8 +3,8 @@
 #+author: Nicholas Hubbard
 
 * Overview
- Static inference engine the RDFS-Plus modeling language defined in [[https://workingontologist.org/index.html][Semantic
- Web for the Working Ontologist]]. 
+ Static inference engine for the RDFS-Plus modeling language defined in
+ [[https://workingontologist.org/index.html][Semantic Web for the Working Ontologist]].
 
 * Disclaimer
   If you actually need an RDFS-Plus inference engine their are better options
