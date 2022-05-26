@@ -16,5 +16,8 @@
   + Parse [[https://en.wikipedia.org/wiki/Turtle_(syntax)][turtle files]] into pure rdf 
   + Performs contradiction analysis
 
-* Workflow
-
+* Usage
+#+BEGIN_SRC
+rdfs-plus-inference-engine/main File.ttl
+#+END_SRC
+which outputs a file named =File.ttl.inferred=.
