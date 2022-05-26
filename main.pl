@@ -14,10 +14,10 @@ main :-
     halt(0).
 
 main([]).
-main(Files) :-
+main([File|Files]) :-
     retractall(rdf(_,_,_)),
     parse_and_assert_ttlFile(File),
     make_all_inferences,
     check_for_contradictions,
-    write_new_ttlFile,
+    write_new_ttlFile(File),
     main(Files).
