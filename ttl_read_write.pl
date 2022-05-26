@@ -27,4 +27,5 @@ parse_and_assert_ttlFile(File) :-
 %   Write all known rdf/3 triples to a file named OutFile.
 
 write_new_ttlFile(File) :-
+    string_concat(File,'.inferred',OutFile),
     rdf_save_turtle(OutFile,[]).
