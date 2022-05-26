@@ -9,13 +9,7 @@
 * Disclaimer
   If you actually need an RDFS-Plus inference engine their are better options
   out there. This is just a toy project that I created for fun to help me learn
-  Prolog.
-
-* State of the Project
-  All predicates for creating new rdf/3 triples and analyzing for
-  contradictions based off RDFS-Plus have been implemented. The final step for
-  completion of the project is to figure out an algorithm to compute all
-  possible inferences.
+  SWI-Prolog.
 
 * Features
   + Static inference engine 
@@ -23,7 +17,4 @@
   + Performs contradiction analysis
 
 * Workflow
-Simply run your turtle files against NAME_TBD and you will either get error
-messages about all the mistakes you have made, or you will get a new file with a
-/.inferred/ extension that is a copy of the original file with all of the
-inferred triples appended.
+
