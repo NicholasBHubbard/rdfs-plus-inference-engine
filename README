@@ -21,7 +21,7 @@
 
 * Usage
 #+BEGIN_SRC
-rdfs-plus-inference-engine/main File.ttl
+$ rdfs-plus-inference-engine/main File.ttl
 #+END_SRC
 This command outputs a file named =File.ttl.inferred=.
 
